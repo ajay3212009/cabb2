@@ -1,0 +1,6 @@
+{
+  "name": "QuickCab - AI Powered Cab Booking",
+  "description": "A PWA-ready cab booking application that helps users find and book rides with AI-enhanced descriptions. Features offline capabilities and an installable app experience.",
+  "requestFramePermissions": [],
+  "prompt": ""
+}
