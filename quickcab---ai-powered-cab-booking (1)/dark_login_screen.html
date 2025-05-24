@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RideNow - Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .phone-container {
+            width: 375px;
+            height: 812px;
+            background: #1a1a1a;
+            border-radius: 40px;
+            padding: 8px;
+            box-shadow: 
+                0 0 0 2px #333,
+                0 20px 60px rgba(0,0,0,0.8),
+                inset 0 0 0 1px rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0f0f0f 100%);
+            border-radius: 32px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .background-pattern {
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(147, 51, 234, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 60% 20%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+            animation: backgroundShift 20s ease-in-out infinite;
+        }
+
+        @keyframes backgroundShift {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .status-bar {
+            height: 44px;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .login-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: calc(100% - 44px);
+            padding: 40px 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #9333ea 0%, #3b82f6 50%, #10b981 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin: 0 auto 20px;
+            box-shadow: 
+                0 8px 32px rgba(147, 51, 234, 0.3),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
+            animation: logoGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes logoGlow {
+            0%, 100% { 
+                box-shadow: 
+                    0 8px 32px rgba(147, 51, 234, 0.3),
+                    0 0 0 1px rgba(255, 255, 255, 0.1);
+            }
+            50% { 
+                box-shadow: 
+                    0 12px 48px rgba(147, 51, 234, 0.5),
+                    0 0 0 1px rgba(255, 255, 255, 0.2);
+            }
+        }
+
+        .app-name {
+            font-size: 28px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #9333ea, #3b82f6, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .app-tagline {
+            font-size: 16px;
+            color: #9ca3af;
+            font-weight: 400;
+        }
+
+        .login-form {
+            width: 100%;
+            max-width: 320px;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 18px 20px 18px 50px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            color: #ffffff;
+            font-size: 16px;
+            backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: rgba(147, 51, 234, 0.5);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 
+                0 0 0 3px rgba(147, 51, 234, 0.1),
+                0 8px 32px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .input-field::placeholder {
+            color: #6b7280;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            color: #6b7280;
+            transition: color 0.3s ease;
+        }
+
+        .input-field:focus + .input-icon {
+            color: #9333ea;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-bottom: 32px;
+        }
+
+        .forgot-password a {
+            color: #6b7280;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password a:hover {
+            color: #9333ea;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #9333ea 0%, #3b82f6 50%, #10b981 100%);
+            border: none;
+            border-radius: 16px;
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 
+                0 8px 32px rgba(147, 51, 234, 0.3),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 12px 48px rgba(147, 51, 234, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.2);
+        }
+
+        .login-button:active {
+            transform: translateY(0);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 32px 0;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .divider span {
+            padding: 0 16px;
+        }
+
+        .social-buttons {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .social-button {
+            flex: 1;
+            padding: 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .signup-link {
+            text-align: center;
+            color: #6b7280;
+            font-size: 14px;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .signup-link a {
+            color: #9333ea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .signup-link a:hover {
+            color: #7c3aed;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .floating-elements {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .floating-element {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(147, 51, 234, 0.3);
+            border-radius: 50%;
+            animation: float 15s linear infinite;
+        }
+
+        .floating-element:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+            background: rgba(59, 130, 246, 0.3);
+        }
+
+        .floating-element:nth-child(2) {
+            top: 60%;
+            right: 15%;
+            animation-delay: 5s;
+            background: rgba(16, 185, 129, 0.3);
+        }
+
+        .floating-element:nth-child(3) {
+            bottom: 30%;
+            left: 20%;
+            animation-delay: 10s;
+            background: rgba(147, 51, 234, 0.3);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .loading-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(147, 51, 234, 0.3);
+            border-top: 3px solid #9333ea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <div class="screen">
+            <div class="background-pattern"></div>
+            
+            <div class="floating-elements">
+                <div class="floating-element"></div>
+                <div class="floating-element"></div>
+                <div class="floating-element"></div>
+            </div>
+
+            <div class="status-bar">
+                <span>9:41</span>
+                <span></span>
+                <span>🔋 100%</span>
+            </div>
+
+            <div class="login-container">
+                <div class="logo-section">
+                    <div class="logo">🚗</div>
+                    <h1 class="app-name">RideNow</h1>
+                    <p class="app-tagline">Your ride, your way</p>
+                </div>
+
+                <form class="login-form" onsubmit="handleLogin(event)">
+                    <div class="input-group">
+                        <input 
+                            type="email" 
+                            class="input-field" 
+                            placeholder="Email address"
+                            required
+                            autocomplete="email"
+                        >
+                        <div class="input-icon">📧</div>
+                    </div>
+
+                    <div class="input-group">
+                        <input 
+                            type="password" 
+                            class="input-field" 
+                            placeholder="Password"
+                            required
+                            autocomplete="current-password"
+                        >
+                        <div class="input-icon">🔒</div>
+                    </div>
+
+                    <div class="forgot-password">
+                        <a href="#" onclick="showForgotPassword()">Forgot Password?</a>
+                    </div>
+
+                    <button type="submit" class="login-button">
+                        Sign In
+                    </button>
+                </form>
+
+                <div class="divider">
+                    <span>Or continue with</span>
+                </div>
+
+                <div class="social-buttons">
+                    <button class="social-button" onclick="socialLogin('google')">
+                        🔍
+                    </button>
+                    <button class="social-button" onclick="socialLogin('apple')">
+                        🍎
+                    </button>
+                    <button class="social-button" onclick="socialLogin('facebook')">
+                        📘
+                    </button>
+                </div>
+
+                <div class="signup-link">
+                    Don't have an account? <a href="#" onclick="showSignup()">Sign up</a>
+                </div>
+            </div>
+
+            <div class="loading-overlay" id="loadingOverlay">
+                <div class="loading-spinner"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            const loginButton = document.querySelector('.login-button');
+            
+            // Show loading state
+            loadingOverlay.style.display = 'flex';
+            loginButton.textContent = 'Signing In...';
+            
+            // Simulate login process
+            setTimeout(() => {
+                loadingOverlay.style.display = 'none';
+                loginButton.textContent = '✓ Welcome back!';
+                loginButton.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+                
+                // Simulate navigation to main app
+                setTimeout(() => {
+                    showMainApp();
+                }, 1500);
+            }, 2000);
+        }
+
+        function socialLogin(provider) {
+            const button = event.target;
+            const originalContent = button.textContent;
+            
+            button.style.transform = 'scale(0.95)';
+            button.textContent = '...';
+            
+            setTimeout(() => {
+                button.style.transform = 'scale(1)';
+                button.textContent = originalContent;
+                
+                // Simulate successful social login
+                document.querySelector('.login-button').textContent = `✓ Signed in with ${provider}`;
+                document.querySelector('.login-button').style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+                
+                setTimeout(() => {
+                    showMainApp();
+                }, 1500);
+            }, 1000);
+        }
+
+        function showForgotPassword() {
+            const container = document.querySelector('.login-container');
+            container.style.transform = 'translateX(-100%)';
+            container.style.opacity = '0';
+            
+            setTimeout(() => {
+                alert('Password reset link sent to your email!');
+                container.style.transform = 'translateX(0)';
+                container.style.opacity = '1';
+            }, 300);
+        }
+
+        function showSignup() {
+            const container = document.querySelector('.login-container');
+            container.style.transform = 'translateY(-100%)';
+            container.style.opacity = '0';
+            
+            setTimeout(() => {
+                // In a real app, this would navigate to signup screen
+                alert('Navigating to Sign Up screen...');
+                container.style.transform = 'translateY(0)';
+                container.style.opacity = '1';
+            }, 300);
+        }
+
+        function showMainApp() {
+            const screen = document.querySelector('.screen');
+            screen.style.transform = 'scale(0.8)';
+            screen.style.opacity = '0';
+            
+            setTimeout(() => {
+                // In a real app, this would navigate to the main booking screen
+                alert('Welcome to RideNow! Redirecting to booking screen...');
+                screen.style.transform = 'scale(1)';
+                screen.style.opacity = '1';
+            }, 500);
+        }
+
+        // Add input focus animations
+        document.querySelectorAll('.input-field').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'translateY(-2px)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Add floating elements dynamically
+        function createFloatingElement() {
+            const element = document.createElement('div');
+            element.className = 'floating-element';
+            element.style.left = Math.random() * 100 + '%';
+            element.style.animationDelay = Math.random() * 15 + 's';
+            
+            const colors = [
+                'rgba(147, 51, 234, 0.3)',
+                'rgba(59, 130, 246, 0.3)',
+                'rgba(16, 185, 129, 0.3)'
+            ];
+            element.style.background = colors[Math.floor(Math.random() * colors.length)];
+            
+            document.querySelector('.floating-elements').appendChild(element);
+            
+            setTimeout(() => {
+                element.remove();
+            }, 15000);
+        }
+
+        // Create floating elements periodically
+        setInterval(createFloatingElement, 3000);
+
+        // Add subtle mouse movement parallax
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+            
+            const backgroundPattern = document.querySelector('.background-pattern');
+            backgroundPattern.style.transform = `translate(${mouseX * 10}px, ${mouseY * 10}px)`;
+        });
+    </script>
+</body>
+</html>
